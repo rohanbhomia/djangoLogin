@@ -8,6 +8,8 @@ from django.shortcuts import (
     get_object_or_404,
     redirect
 )
+from users.models import CustomUser
+import random
 
 
 # Create your views here.
@@ -51,15 +53,31 @@ def logout(request):
 def forgot_password(request):
     if request.POST:
         email = request.POST.get('email')
-        print('email...', email)
-        return render(request, "login/reset_password.html", {'reset': True})
+        custom_user_obj = CustomUser.objects.filter(email=email).exists()
+        if custom_user_obj:
+            otp = random.randint(0000, 9999)
+            custom_user_obj = CustomUser.objects.get(email=email)
+            custom_user_obj.otp = otp
+            custom_user_obj.save()
+            print('otp...', otp)
+            return render(request, "login/reset_password.html", {'reset': True, 'email': email})
+        else:
+            return render(request, "login/reset_password.html", {'message': 'Invalid email', 'invalid': True})
     else:
         return render(request, "login/reset_password.html", {})
 
 
 def otp_check(request):
     otp = request.POST.get('otp')
-    return render(request, "login/reset_password.html", {'otp': True})
+    email = request.POST.get('email')
+    custom_user_obj = CustomUser.objects.filter(email=email, otp=otp).exists()
+    if custom_user_obj:
+        print('otp...', otp)
+        print('email...', email)
+        return render(request, "login/reset_password.html", {'otp': True})
+    else:
+        print('wronng otp...', otp)
+        return render(request, "login/reset_password.html", {'reset': True, 'email': email})
 
 
 def save_password(request):
