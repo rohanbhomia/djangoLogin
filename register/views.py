@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from users.forms import CustomUserCreationForm
 from users.models import CustomUser
 from django.contrib.auth import login
-from login.views import home
+from login.views import home, login_page, login
 
 
 # Create your views here.
@@ -26,9 +26,11 @@ def register(request):
                 email=email,
                 password=password)
 
-            login(request, user)
+            #login(request, user)
 
             print("sign up successfully...")
+            mess
+            return redirect('login')
         else:
             print("not valid...", form.errors)
 
