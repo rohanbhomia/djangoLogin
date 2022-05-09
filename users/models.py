@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    otp = models.IntegerField(default=None)
+    otp = models.IntegerField(default=None, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

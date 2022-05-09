@@ -25,9 +25,9 @@ class AccountAuthenticationForm(forms.ModelForm):
         # for field in (self.fields['email'], self.fields['password']):
         #     field.widget.attrs.update({'class': 'form-control '})
         self.fields['email'] = forms.CharField(label='Email',
-                                               widget=forms.TextInput(attrs={'type': 'email', 'placeholder': 'Please enter your email...', 'class': 'form-control'}))
+                                               widget=forms.TextInput(attrs={'type': 'email', 'placeholder': 'Please enter your email...', 'class': 'form-control', 'autocomplete': 'off'}))
         self.fields['password'] = forms.CharField(label='Password',
-                                                  widget=forms.TextInput(attrs={'type': 'password', 'placeholder': 'Please enter your password...', 'class': 'form-control'}))
+                                                  widget=forms.TextInput(attrs={'type': 'password', 'placeholder': 'Please enter your password...', 'class': 'form-control', 'autocomplete': 'off'}))
 
     def clean(self):
         if self.is_valid():
