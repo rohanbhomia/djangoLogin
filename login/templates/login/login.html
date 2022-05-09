@@ -1,10 +1,16 @@
 <div class="container jumbotron text-justify">
-    <h1 class="display-4">Login Here  </h1>
+    <h1 class="display-4">Login</h1>
     <form id="login_form" class="form" method="post" action="{% url 'login' %}">
-    {% csrf_token %} <!-- for security reasons -->
-    {{login_form.as_p}} <!-- rendering form as paragraph -->
-    <input type="submit" class="btn  btn-outline-info" value="Login">
+        {% csrf_token %}
+        <!-- for security reasons -->
+        {{login_form.as_p}}
+        <!-- rendering form as paragraph -->
+        <input type="submit" class="btn  btn-outline-info" value="Login">
     </form>
-    
 
-    </div>
+    <form action="/register">
+        <input type="submit" value="Sign up" />
+    </form>
+
+
+</div>
