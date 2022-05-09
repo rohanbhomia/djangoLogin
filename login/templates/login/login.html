@@ -1,21 +1,52 @@
 {% include "login/header.html" %}
+<style>
+    .container {
+
+        height: 100%;
+        width: 100%;
+        padding-top: 15%;
+
+    }
+
+    .customcontainer {
+
+        border-radius: 25px;
+        width: 500px;
+        margin: 0 auto;
+        padding-left: 8%;
+
+
+    }
+</style>
 <div class="container jumbotron text-justify">
-    <h1 class="display-4">Login</h1>
-    <div>
+
+    <div class="customcontainer">
+        <h1 class="display-4">Login</h1>
         <form id="login_form" class="form" method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <!-- for security reasons -->
             {{login_form.as_p}}
             <!-- rendering form as paragraph -->
-            <input type="submit" class="btn  btn-outline-info" value="Login">
-        </form>
-
     </div>
-    <div>
+    <div class="customcontainer">
+        <div class="row">
+            <div class=" col-md-3">
+                <input type="submit" class="btn  btn-outline-info" value="Login">
+                </form>
+            </div>
 
-        <form action="/register">
-            <input type="submit" class="btn  btn-outline-info" value="Sign up" />
-        </form>
+            <div class="col-md-4">
+                <form action="/register">
+                    <input type="submit" class="btn  btn-outline-info" value="Sign up" />
+                </form>
+            </div>
+            <div class="col-md-3">
+                <form action="/forgot_password">
+                    <input type="submit" class="btn  btn-outline-info" value="Forgot password" />
+                </form>
+            </div>
+        </div>
+
     </div>
 
 

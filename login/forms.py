@@ -13,8 +13,8 @@ class AccountAuthenticationForm(forms.ModelForm):
         model = CustomUser
         fields = ('email', 'password')
         widgets = {
-            'email': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Please enter your email...', 'style': 'width:200px;'}),
-            'password': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Please enter your password...', 'style': 'width:200px;'}),
+            'email': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Please enter your email...', 'style': 'width:240px;'}),
+
         }
 
     def __init__(self, *args, **kwargs):
@@ -24,9 +24,10 @@ class AccountAuthenticationForm(forms.ModelForm):
         super(AccountAuthenticationForm, self).__init__(*args, **kwargs)
         # for field in (self.fields['email'], self.fields['password']):
         #     field.widget.attrs.update({'class': 'form-control '})
-
+        self.fields['email'] = forms.CharField(label='Email',
+                                               widget=forms.TextInput(attrs={'type': 'email', 'placeholder': 'Please enter your email...', 'class': 'form-control'}))
         self.fields['password'] = forms.CharField(label='Password',
-                                                  widget=forms.TextInput(attrs={'type': 'password', 'placeholder': 'Please enter your password...', 'style': 'width:200px;', 'class': 'form-control'}))
+                                                  widget=forms.TextInput(attrs={'type': 'password', 'placeholder': 'Please enter your password...', 'class': 'form-control'}))
 
     def clean(self):
         if self.is_valid():

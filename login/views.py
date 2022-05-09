@@ -46,3 +46,23 @@ def login_page(request):
 def logout(request):
     django_logout(request)
     return redirect('login')
+
+
+def forgot_password(request):
+    if request.POST:
+        email = request.POST.get('email')
+        print('email...', email)
+        return render(request, "login/reset_password.html", {'reset': True})
+    else:
+        return render(request, "login/reset_password.html", {})
+
+
+def otp_check(request):
+    otp = request.POST.get('otp')
+    return render(request, "login/reset_password.html", {'otp': True})
+
+
+def save_password(request):
+    password1 = request.POST.get('password1')
+    return redirect('login')
+    return render(request, "login/reset_password.html", {'otp': True})
