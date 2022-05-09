@@ -1,3 +1,4 @@
+{% include "login/header.html" %}
 <div class="container jumbotron text-justify">
     <h1 class="display-4">Register</h1>
     <form id="register_form" class="form" method="post" action="{% url 'register' %}">
@@ -12,7 +13,7 @@
         <input type="submit" class="btn  btn-outline-info" value="Sign up">
     </form>
     <form action="/">
-        <input type="submit" value="Log in" />
+        <input type="submit" class="btn  btn-outline-info" value="Log in" />
     </form>
 
 

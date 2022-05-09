@@ -1,8 +1,7 @@
 
 from django.http import HttpResponse
 from .forms import AccountAuthenticationForm
-from django.contrib.auth import authenticate
-from django.contrib.auth import login
+from django.contrib.auth import login, logout as django_logout, authenticate
 from django.contrib import messages
 from django.shortcuts import (
     render,
@@ -15,16 +14,17 @@ from django.shortcuts import (
 
 
 def home(request):
+    user = request.user
 
-    return render(request, "login/home.html", {})
+    return render(request, "login/home.html", {'email': user})
 
 
 def login_page(request):
 
     context = {}
     user = request.user
-    # if user.is_authenticated:
-    #     return redirect("home")
+    if user.is_authenticated:
+        return redirect("home")
     if request.POST:
         form = AccountAuthenticationForm(request.POST)
         email = request.POST.get('email')
@@ -44,5 +44,5 @@ def login_page(request):
 
 
 def logout(request):
-
+    django_logout(request)
     return redirect('login')

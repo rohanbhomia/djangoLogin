@@ -1,6 +1,10 @@
+{% include "login/header.html" %}
 <div class="container jumbotron text-justify">
     <h1 class="display-4">Home</h1>
-    <a href="/logout">Logout</a>
+    <h2 class="display-6">User: {{email}}</h2>
+    <form action="/logout">
+        <input type="submit" class="btn  btn-outline-info" value="Logout" />
+    </form>
 
 
 </div>

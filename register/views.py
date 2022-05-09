@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from users.forms import CustomUserCreationForm
 from users.models import CustomUser
 from django.contrib.auth import login
+from login.views import home
 
 
 # Create your views here.
@@ -9,8 +10,11 @@ from django.contrib.auth import login
 
 def register(request):
 
-    context = {}
     form = CustomUserCreationForm()
+
+    user = request.user
+    if user.is_authenticated:
+        return redirect("home")
 
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
