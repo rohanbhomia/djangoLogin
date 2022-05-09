@@ -10,6 +10,7 @@ from django.shortcuts import (
 )
 from users.models import CustomUser
 import random
+from django.core.mail import send_mail
 
 
 # Create your views here.
@@ -59,6 +60,13 @@ def forgot_password(request):
             custom_user_obj = CustomUser.objects.get(email=email)
             custom_user_obj.otp = otp
             custom_user_obj.save()
+
+            send_mail(
+                'Subject here',
+                f'otp is {otp}',
+                'rkhobragade5995@gmail.com',
+                ['rkhobragade5995@gmail.com'],
+            )
             print('otp...', otp)
             return render(request, "login/reset_password.html", {'reset': True, 'email': email})
         else:
@@ -77,7 +85,7 @@ def otp_check(request):
         return render(request, "login/reset_password.html", {'otp': True})
     else:
         print('wronng otp...', otp)
-        return render(request, "login/reset_password.html", {'reset': True, 'email': email})
+        return render(request, "login/reset_password.html", {'reset': True, 'email': email, 'message': 'Invalid otp', 'invalid': True})
 
 
 def save_password(request):
