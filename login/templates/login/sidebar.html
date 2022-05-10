@@ -1,0 +1,57 @@
+<div class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column" id="sidebar">
+    <ul class="nav flex-column text-white w-100">
+        <a href="#" class="nav-link h3 text-white my-2">
+            Menu
+        </a>
+        <li href="#" class="nav-link">
+            <i class="bx bxs-dashboard"></i>
+            <!-- <span class="mx-2">CRUD</span> -->
+            <span class="mx-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+                aria-controls="collapseExample">CRUD</span>
+
+
+
+        </li>
+        <div class="collapse" id="collapseExample">
+
+            <li><a class="dropdown-item" href="/todos/create_todo" style="color: white;">Create</a></li>
+            <li><a class="dropdown-item" href="#" style="color: white;">List</a></li>
+            <li><a class="dropdown-item" href="#" style="color: white;"></a></li>
+
+        </div>
+        <li href="#" class="nav-link">
+            <i class="bx bx-user-check"></i>
+            <span class="mx-2">Profile</span>
+        </li>
+        <li href="#" class="nav-link">
+            <i class="bx bx-conversation"></i>
+            <span class="mx-2">Contact</span>
+        </li>
+
+    </ul>
+
+
+</div>
+
+<div class="p-1 my-container active-cont">
+    <!-- Top Nav -->
+    <nav class="navbar top-navbar navbar-light bg-light px-5">
+        <a class="btn border-0" id="menu-btn"><i class="bx bx-menu"></i></a>
+    </nav>
+    <!--End Top Nav -->
+    <!-- <h3 class="text-dark p-3">RESPONSIVE SIDEBAR NAV 💻 📱
+    </h3>
+    <p class="px-3">Responsive navigation sidebar built using <a class="text-dark"
+            href="https://getbootstrap.com/">Bootstrap 5</a>.</p> -->
+</div>
+
+
+<script>
+    var menu_btn = document.querySelector("#menu-btn");
+    var sidebar = document.querySelector("#sidebar");
+    var container = document.querySelector(".my-container");
+    menu_btn.addEventListener("click", () => {
+        sidebar.classList.toggle("active-nav");
+        container.classList.toggle("active-cont");
+    });
+</script>
