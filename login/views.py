@@ -39,7 +39,7 @@ def login_page(request):
             messages.success(request, "Logged In")
             return redirect("home")
         else:
-            messages.error(request, "please Correct Below Errors")
+            messages.error(request, "Please correct below errors")
     else:
         form = AccountAuthenticationForm()
 

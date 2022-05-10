@@ -3,6 +3,7 @@ from users.forms import CustomUserCreationForm
 from users.models import CustomUser
 from django.contrib.auth import login
 from login.views import home, login_page, login
+from django.contrib import messages
 
 
 # Create your views here.
@@ -27,9 +28,7 @@ def register(request):
                 email=email,
                 password=password)
 
-            #login(request, user)
-
-            print("sign up successfully...")
+            messages.success(request, "Sign up successfully")
             return redirect('login')
         else:
             print("not valid...", form.errors)
