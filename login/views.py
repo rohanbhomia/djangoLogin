@@ -1,6 +1,6 @@
 
 from django.http import HttpResponse
-from .forms import AccountAuthenticationForm
+from .forms import AccountAuthenticationForm, ChangePassword
 from django.contrib.auth import login, logout as django_logout, authenticate
 from django.contrib import messages
 from django.shortcuts import (
@@ -83,13 +83,25 @@ def otp_check(request):
     if custom_user_obj:
         print('otp...', otp)
         print('email...', email)
-        return render(request, "login/reset_password.html", {'otp': True})
+        form = ChangePassword()
+        return render(request, "login/reset_password.html", {'otp': True, 'form': form, 'email': email})
     else:
         print('wronng otp...', otp)
         return render(request, "login/reset_password.html", {'reset': True, 'email': email, 'message': 'Invalid otp', 'invalid': True})
 
 
 def save_password(request):
+    form = ChangePassword(request.POST)
     password1 = request.POST.get('password1')
-    return redirect('login')
-    return render(request, "login/reset_password.html", {'otp': True})
+    email = request.POST.get('email')
+    print('email2...', email)
+    if form.is_valid():
+        custom_user_obj = CustomUser.objects.get(email=email)
+        custom_user_obj.set_password(password1)
+        custom_user_obj.save()
+        messages.success(request, "Password reset successfully")
+        return redirect('login')
+
+    else:
+        print("not valid pass....", form.errors)
+        return render(request, "login/reset_password.html", {'otp': True, 'form': form, 'email': email})
