@@ -25,12 +25,14 @@ def register(request):
             password = request.POST.get('password1')
             username = request.POST.get('username')
             mobile = request.POST.get('mobile')
+            gender = request.POST.get('gender')
 
             user = CustomUser.objects.create_user(
                 email=email,
                 password=password,
                 username=username,
-                mobile=mobile)
+                mobile=mobile,
+                gender=gender)
 
             messages.success(request, "Sign up successfully")
             return redirect('login')

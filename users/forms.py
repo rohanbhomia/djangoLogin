@@ -23,6 +23,9 @@ def mobile_check(value):
 
 class CustomUserCreationForm(UserCreationForm):
 
+    gender = forms.ChoiceField(
+        choices=[('Male', 'Male'), ('Female', 'Female')])
+
     # email = forms.CharField(label='Enter email')
     # password1 = forms.CharField(label='Enter password',
     #                             widget = forms.PasswordInput, validators = [validate_password])
@@ -31,7 +34,8 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'mobile', 'email', 'password1', 'password2')
+        fields = ('username', 'mobile', 'gender',
+                  'email', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
@@ -48,6 +52,9 @@ class CustomUserCreationForm(UserCreationForm):
                                                    widget=forms.TextInput(attrs={'placeholder': 'Please enter your password...', 'style': 'width:300px;', 'class': 'form-control', 'type': 'password', 'oninvalid': "this.setCustomValidity('Please enter your password')", 'oninput': "this.setCustomValidity('')"}))
         self.fields['password2'] = forms.CharField(label='Confirm password', error_messages={'required': "Please enter your password"}, validators=[validate_password],
                                                    widget=forms.TextInput(attrs={'placeholder': 'Please enter your password...', 'style': 'width:300px;', 'class': 'form-control', 'type': 'password', 'oninvalid': "this.setCustomValidity('Please enter your password')", 'oninput': "this.setCustomValidity('')"}))
+
+        self.fields['gender'] = forms.ChoiceField(
+            label='Gender', choices=[('Male', 'Male'), ('Female', 'Female')])
 
 
 class CustomUserChangeForm(UserChangeForm):

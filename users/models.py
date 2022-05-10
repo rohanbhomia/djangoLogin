@@ -12,6 +12,7 @@ class CustomUser(AbstractUser):
     otp = models.IntegerField(default=None, null=True)
     username = models.CharField(max_length=40, default=None, null=True)
     mobile = models.BigIntegerField(default=None, null=True)
+    gender = models.CharField(max_length=40, default=None, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

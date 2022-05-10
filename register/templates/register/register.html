@@ -9,6 +9,7 @@
     <form id="register_form" class="form" method="post" action="{% url 'register' %}">
         {% csrf_token %}
 
+
         {{form.as_p}}
         {% if form.errors %}
         {% endif %}
