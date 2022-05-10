@@ -19,7 +19,7 @@ from django.core.mail import send_mail
 def home(request):
     user = request.user
 
-    return render(request, "login/home.html", {'email': user})
+    return render(request, "login/home.html", {'user': user})
 
 
 def login_page(request):
