@@ -81,12 +81,11 @@ def otp_check(request):
     email = request.POST.get('email')
     custom_user_obj = CustomUser.objects.filter(email=email, otp=otp).exists()
     if custom_user_obj:
-        print('otp...', otp)
-        print('email...', email)
+
         form = ChangePassword()
         return render(request, "login/reset_password.html", {'otp': True, 'form': form, 'email': email})
     else:
-        print('wronng otp...', otp)
+
         return render(request, "login/reset_password.html", {'reset': True, 'email': email, 'message': 'Invalid otp', 'invalid': True})
 
 
@@ -94,14 +93,15 @@ def save_password(request):
     form = ChangePassword(request.POST)
     password1 = request.POST.get('password1')
     email = request.POST.get('email')
-    print('email2...', email)
+
     if form.is_valid():
         custom_user_obj = CustomUser.objects.get(email=email)
         custom_user_obj.set_password(password1)
         custom_user_obj.save()
+
         messages.success(request, "Password reset successfully")
         return redirect('login')
 
     else:
-        print("not valid pass....", form.errors)
+
         return render(request, "login/reset_password.html", {'otp': True, 'form': form, 'email': email})
