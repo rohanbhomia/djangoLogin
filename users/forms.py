@@ -20,12 +20,12 @@ class CustomUserCreationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
-        self.fields['email'] = forms.CharField(label='Enter email',
-                                               widget=forms.TextInput(attrs={'type': 'email', 'placeholder': 'Please enter your email...', 'style': 'width:300px;', 'class': 'form-control'}))
-        self.fields['password1'] = forms.CharField(label='Enter password', validators=[validate_password],
-                                                   widget=forms.TextInput(attrs={'placeholder': 'Please enter your password...', 'style': 'width:300px;', 'class': 'form-control', 'type': 'password'}))
-        self.fields['password2'] = forms.CharField(label='Confirm password', validators=[validate_password],
-                                                   widget=forms.TextInput(attrs={'placeholder': 'Please enter your password...', 'style': 'width:300px;', 'class': 'form-control', 'type': 'password'}))
+        self.fields['email'] = forms.CharField(label='Enter email', error_messages={'required': "Please enter your email"},
+                                               widget=forms.TextInput(attrs={'type': 'email', 'placeholder': 'Please enter your email...', 'style': 'width:300px;', 'class': 'form-control', 'oninvalid': "this.setCustomValidity('Please enter your email')", 'oninput': "this.setCustomValidity('')"}))
+        self.fields['password1'] = forms.CharField(label='Enter password', error_messages={'required': "Please enter your password"}, validators=[validate_password],
+                                                   widget=forms.TextInput(attrs={'placeholder': 'Please enter your password...', 'style': 'width:300px;', 'class': 'form-control', 'type': 'password', 'oninvalid': "this.setCustomValidity('Please enter your password')", 'oninput': "this.setCustomValidity('')"}))
+        self.fields['password2'] = forms.CharField(label='Confirm password', error_messages={'required': "Please enter your password"}, validators=[validate_password],
+                                                   widget=forms.TextInput(attrs={'placeholder': 'Please enter your password...', 'style': 'width:300px;', 'class': 'form-control', 'type': 'password', 'oninvalid': "this.setCustomValidity('Please enter your password')", 'oninput': "this.setCustomValidity('')"}))
 
 
 class CustomUserChangeForm(UserChangeForm):

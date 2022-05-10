@@ -1,4 +1,9 @@
 {% include "login/header.html" %}
+<style>
+    .errorlist li {
+        color: red;
+    }
+</style>
 <div class="container jumbotron text-justify">
     <h1 class="display-4">Register</h1>
     <form id="register_form" class="form" method="post" action="{% url 'register' %}">
@@ -6,8 +11,6 @@
 
         {{form.as_p}}
         {% if form.errors %}
-
-
         {% endif %}
 
         <div class="row">
@@ -25,5 +28,18 @@
 </div>
 
 
-
+<input type="hidden" value={{not_valid}} id="not_valid">
 </div>
+
+<script>
+    // var not_valid = document.getElementById('not_valid')
+    // if (not_valid != null) {
+    //     if (not_valid.value) {
+    //         if (document.getElementById('id_email').value.length == 0) {
+    //             document.getElementById("id_email").style.border = "1px solid red";
+    //         }
+    //     }
+    // }
+
+
+</script>

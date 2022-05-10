@@ -29,7 +29,8 @@ def login_page(request):
     if user.is_authenticated:
         return redirect("home")
     if request.POST:
-        form = AccountAuthenticationForm(request.POST)
+        form = AccountAuthenticationForm(
+            request.POST)
         email = request.POST.get('email')
         password = request.POST.get('password')
         user = authenticate(email=email, password=password)

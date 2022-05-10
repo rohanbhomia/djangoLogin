@@ -17,7 +17,8 @@ def register(request):
         return redirect("home")
 
     if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
+        form = CustomUserCreationForm(
+            request.POST)
         if form.is_valid():
             email = request.POST.get('email')
             password = request.POST.get('password1')
@@ -29,11 +30,10 @@ def register(request):
             #login(request, user)
 
             print("sign up successfully...")
-            mess
             return redirect('login')
         else:
             print("not valid...", form.errors)
 
-        return render(request, "register/register.html", {'form': form})
+            return render(request, "register/register.html", {'form': form, 'not_valid': True})
 
     return render(request, "register/register.html", {'form': form})
