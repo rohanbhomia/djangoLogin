@@ -1,0 +1,51 @@
+{% load static %}
+<footer class="clearfix">                       
+                        <div class="pull-left">
+                            <span>&copy; 2020</span></a>
+                        </div>
+                    </footer>
+                    <!-- END Footer -->
+                </div>
+                <!-- END Main Container -->
+            </div>
+            <!-- END Page Container -->
+        </div>
+        <!-- END Page Wrapper -->
+
+        <!-- Scroll to top link, initialized in <?= base_url(); ?>assets/js/app.js - scrollToTop() -->
+        <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
+
+        <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
+        <script src="{% static 'js/vendor/jquery.min.js' %}"></script>       
+        <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+         <!-- <script src="{% static 'fullcalendar/dist/fullcalendar.min.js' %}"></script> -->
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/app.js' %}"></script>
+    
+        
+
+    </body>
+
+    <script type="text/javascript">
+
+
+    
+
+    $("a[href='{{request.path}}'").parent().parent().parent().addClass('active'); 
+    $("a[href='{{request.path}}'").addClass('active'); 
+
+    if(!$("a").hasClass('active'))
+    { 
+        path = sessionStorage.getItem("path");
+        $("a[href='"+path+"'").parent().parent().parent().addClass('active');
+        $("a[href='"+path+"'").addClass('active');
+    }
+    else
+    {
+        sessionStorage.setItem("path", "{{request.path}}");
+        sessionStorage.getItem("path");
+    }
+
+    </script>
+    
+</html>
