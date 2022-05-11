@@ -43,70 +43,24 @@
 
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">mySite</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="height: 60px;">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+{% include "login/navbar.html" %}
 
 
-            </ul>
-            {% include "login/message.html" %}
 
-            <div class="d-flex" style="width: 400px;">
-                <h3 class="text-white p-6">Hello, {{user.username}}</h3>
 
-            </div>
-            <div class="d-flex" style="height: 35px;">
-                <form action="/logout">
 
-                    <input type="submit" class="btn  btn-outline-info" value="Logout" />
-                </form>
-            </div>
-        </div>
+<div class="container">
+    <div class="col-sm-4">
+
+        <h1 class="display-4">Create</h1>
+        <form id="login_form" class="form" method="post" action="{% url 'create_todo' %}">
+            {% csrf_token %}
+
+            {{form.as_p}}
+
+            <input type="submit" class="btn  btn-outline-info" value="Save">
+        </form>
     </div>
-</nav>
-<!-- <div class="container jumbotron text-justify">
-    
-    <h2 class="display-6">Hello, {{user.username}}</h2>
-   
 
-
-
-
-</div> -->
-
-{% include "login/sidebar.html" %}
-
-<div class="p-1 my-container active-cont">
-
-    <div class="container jumbotron text-justify">
-
-        <div class="customcontainer">
-            <h1 class="display-4">Create</h1>
-            <form id="login_form" class="form" method="post" action="{% url 'create_todo' %}">
-                {% csrf_token %}
-                <!-- for security reasons -->
-                {{form.as_p}}
-                <!-- rendering form as paragraph -->
-        </div>
-        <div class="customcontainer">
-            <div class="row">
-                <div class=" col-md-4" style="width: 125px;">
-                    <input type="submit" class="btn  btn-outline-info" value="Save">
-                    </form>
-                </div>
-
-
-            </div>
-
-        </div>
-
-
-
-    </div>
 </div>

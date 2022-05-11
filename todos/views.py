@@ -41,6 +41,22 @@ def delete_todo(request):
     return redirect('todo_list')
 
 
+def edit_todo(request):
+
+    row_id = request.POST.get('row_id')
+    title = request.POST.get('title')
+    description = request.POST.get('description')
+
+    todo_obj = Todos.objects.get(id=row_id)
+    todo_obj.title = title
+    todo_obj.description = description
+    todo_obj.save()
+
+    print('row_id...', row_id)
+    messages.success(request, 'Updated successfully')
+    return redirect('todo_list')
+
+
 def todo_list(request):
 
     return render(request, "todos/list.html")
@@ -59,75 +75,18 @@ class todo_list_json(BaseDatatableView):
 
     def render_column(self, row, column):
 
-        # if column == 'is_active':
-        #     if(row.is_active == True):
-        #         return '<a href="#statusData" data-toggle="modal" title="Change Status" onclick="statusFunction('+str(row['id'])+')" class="btn btn-success">Active</a>'
-        #     else:
-        #         return '<a href="#statusData" data-toggle="modal" data-toggle="tooltip" data-placement="bottom" title="Change Status" onclick="statusFunction('+str(row['id'])+')" class="btn btn-danger">Inactive</a>'
-
         if column == 'action':
-            return '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletemodel" onclick="deleteFunction('+str(row.id)+')">Delete</button>'
-            return '<a href="/organization/orgedit/'+str(row.id)+'" data-bs-toggle="tooltip" data-placement="bottom" title="Update" class="label label-success"><i class="fa fa-edit"></i></a>'
+            onclick = f"editFunction('{row.title}','{row.description}','{row.id}')"
 
-        # cursor.execute(
-        #     f"SELECT document_type,document_s3_url FROM organization_client_documents WHERE org_id = '{row['org_id']}' and document_s3_url IS NOT NULL ")
-        # orgClientDoc = cursor.fetchall()
+            return f'<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editmodal" onclick={onclick}>Edit</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletemodal" onclick="deleteFunction('+str(row.id)+')">Delete</button>'
 
-        # if column == 'document_type':
-        #     if orgClientDoc is not None:
-
-        #         ol = ''
-        #         for orgDocRow in orgClientDoc:
-        #             ol += '<a href="' + \
-        #                 str(orgDocRow[1])+'">'+orgDocRow[0]+'</a>, '
-
-        #         return ol
-
-        # if column == 'create':
-        #     mainObjCount = Bots.objects.filter(org_id=row['org_id']).count()
-        #     if mainObjCount is 0:
-        #         path = "/organization/createorgbot/"+str(row['org_id'])
-        #         return f'<a href={path} data-toggle="modal" title="Create bot" onclick="statusFunction('+str(row['org_id'])+')" class="btn btn-primary">Create bot</a>'
-        #     else:
-        #         # mainObj = Bots.objects.get(org_id=row['org_id'],parent_id=0)		## UPDATED ON DATE 07_01_2021
-        #         # mainObj = Bots.objects.get(org_id=row['org_id'],parent_id=0)		## UPDATED ON DATE 07_01_2021
-        #         # ##print('mainObj======>>>>>>>>',mainObj)
-        #         #path = "/organization/orgbotlist/"+str(mainObj.id)
-        #         path = "/organization/orgbotlist/"+str(row['org_id'])
-        #         return f'<a href={path} data-toggle="modal" title="View bot" onclick="statusFunction('+str(row['org_id'])+')" class="btn btn-info">View bot</a>'
-
-        # if column == 'employees':
-        #     cursor.execute(
-        #         f"SELECT count(id) FROM organization_candidatelist WHERE org_id = '{row['org_id']}' ")
-        #     count = cursor.fetchone()[0]
-        #     if count == 0:
-        #         path = "/organization/employeeList/"+str(row['org_id'])
-        #         return f'<a href={path} data-toggle="modal" title="Create bot" onclick="statusFunction('+str(row['org_id'])+')" class="btn btn-success">'+str(count)+'</a>'
-        #     else:
-        #         path = "/organization/employeeList/"+str(row['org_id'])
-        #         return f'<a href={path} data-toggle="modal" title="Create bot" onclick="statusFunction('+str(row['org_id'])+')" class="btn btn-success">'+str(count)+'</a>'
-        # if column == 'attendees':
-        #     cursor.execute(
-        #         f"SELECT count(id) FROM botconversation_conversations WHERE org_id = '{row['id']}' ")
-        #     conversation = cursor.fetchone()
-        #     attendees_count = 0
-        #     if conversation is not None:
-        #         attendees_count = conversation[0]
-
-        #     if attendees_count == 0:
-        #         return ''
-        #     else:
-        #         path = "/organization/attendeeList/"+str(row['org_id'])
-        #         return f'<a href={path} data-toggle="modal" title="Create bot" onclick="statusFunction('+str(row['org_id'])+')" class="btn btn-success">'+str(attendees_count)+'</a>'
-
-        # else:
         return super(todo_list_json, self).render_column(row, column)
 
     def filter_queryset(self, qs):
 
         search = self.request.GET.get('search[value]', None)
         if search:
-            qs = qs.filter(company_name__icontains=search)
+            qs = qs.filter(title__icontains=search)
 
         return qs
 
