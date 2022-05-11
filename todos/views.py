@@ -32,6 +32,15 @@ def create_todo(request):
     return render(request, "todos/create_todo.html", {'form': form})
 
 
+def delete_todo(request):
+
+    row_id = request.POST.get('row_id')
+    todo_obj = Todos.objects.filter(id=row_id).delete()
+    print('row_id...', row_id)
+    messages.success(request, 'Deleted successfully')
+    return redirect('todo_list')
+
+
 def todo_list(request):
 
     return render(request, "todos/list.html")
@@ -57,7 +66,7 @@ class todo_list_json(BaseDatatableView):
         #         return '<a href="#statusData" data-toggle="modal" data-toggle="tooltip" data-placement="bottom" title="Change Status" onclick="statusFunction('+str(row['id'])+')" class="btn btn-danger">Inactive</a>'
 
         if column == 'action':
-            return '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit</button><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Delete</button>'
+            return '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletemodel" onclick="deleteFunction('+str(row.id)+')">Delete</button>'
             return '<a href="/organization/orgedit/'+str(row.id)+'" data-bs-toggle="tooltip" data-placement="bottom" title="Update" class="label label-success"><i class="fa fa-edit"></i></a>'
 
         # cursor.execute(
