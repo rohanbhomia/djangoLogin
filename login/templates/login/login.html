@@ -1,58 +1,90 @@
 {% include "login/header.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
 <style>
     .container {
-
-        /* height: 100%; */
-        /* width: 100%;
-        padding-top: 15%; */
-
+        width: 300px;
     }
 
-    .customcontainer {
 
-        /* border-radius: 25px; */
-        width: 400px;
-        /* margin: 0 auto;
-        padding-left: 8%; */
-
-
+    .containerinner {
+        width: 800px;
+        padding-top: 150px;
+        padding-left: 600px;
     }
 
     .errorlist li {
         color: red;
     }
+
+    .submitbutton {
+        width: 100%;
+    }
+
+    .forgotpassword {
+        text-align: right;
+        text-decoration: none;
+    }
+
+    .asteriskField {
+        display: none;
+    }
+
+    body {
+        /* background-image: url(static/img/bg10.webp); */
+        background-color: aqua;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        /* optional, center the image */
+    }
 </style>
-<div class="container jumbotron text-justify">
 
-    <div class="customcontainer">
-        <h1 class="display-4">Login</h1>
-        <form id="login_form" class="form" method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            <!-- for security reasons -->
-            {{login_form.as_p}}
-            <!-- rendering form as paragraph -->
-    </div>
-    <div class="customcontainer">
-        <div class="row">
-            <div class=" col-md-4" style="width: 125px;">
-                <input type="submit" class="btn  btn-outline-info" value="Login">
-                </form>
+<body>
+    <div class="containermain">
+        <div class="container" style="padding-top:150px;">
+
+            <!-- <h1 class="display-4" style="text-align: center;">Login</h1> -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7" style="text-align: left;">
+                        <h1 class="display-4">Login</h1>
+                    </div>
+                    <div class="col-md-5" style="text-align: right;">
+                        <img src="{% static 'img/space.png' %}" alt="Girl in a jacket" width="100" height="80">
+                    </div>
+                </div>
             </div>
 
-            <div class="col-md-4" style="width: 130px;">
+            <div class="container">
+                <form id="login_form" class="form" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    {{login_form|crispy}}
+                    <br>
+                    <input type="submit" class="btn btn-success submitbutton rounded-lg" style="border-color: black;"
+                        value="Sign in">
+                </form>
+
+            </div>
+            <div class="container" style="text-align: center;">
+
                 <form action="/register">
-                    <input type="submit" class="btn  btn-outline-info" value="Sign up" />
+                    <input type="submit" class="btn  btn-info submitbutton rounded-lg" style="border-color: black;"
+                        value="Create an account" />
+
                 </form>
+
             </div>
-            <div class="col-md-4">
-                <form action="/forgot_password">
-                    <input type="submit" class="btn  btn-outline-info" value="Forgot password" />
-                </form>
-            </div>
+
         </div>
 
     </div>
+</body>
 
-
-
-</div>
+<script>
+    $(document).ready(function () {
+        console.log("ready!");
+        $('<div class="forgotpassword"><a href="/password_reset" class="forgotpassword">Forgot password?</a><div>').insertAfter("#id_password");
+        $('<br>').insertAfter("#div_id_email");
+    });
+</script>

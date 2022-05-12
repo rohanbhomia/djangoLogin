@@ -26,9 +26,9 @@ class AccountAuthenticationForm(forms.ModelForm):
         # for field in (self.fields['email'], self.fields['password']):
         #     field.widget.attrs.update({'class': 'form-control '})
         self.fields['email'] = forms.CharField(label='Email', error_messages={'required': "Please enter your email"},
-                                               widget=forms.TextInput(attrs={'type': 'email', 'placeholder': 'Please enter your email...', 'class': 'form-control', 'autocomplete': 'off', 'oninvalid': "this.setCustomValidity('Please enter your email')", 'oninput': "this.setCustomValidity('')"}))
+                                               widget=forms.TextInput(attrs={'type': 'email', 'class': 'form-control', 'autocomplete': 'off', 'oninvalid': "this.setCustomValidity('Please enter your email')", 'oninput': "this.setCustomValidity('')"}))
         self.fields['password'] = forms.CharField(label='Password', error_messages={'required': "Please enter your password"},
-                                                  widget=forms.TextInput(attrs={'type': 'password', 'placeholder': 'Please enter your password...', 'class': 'form-control', 'autocomplete': 'off', 'oninvalid': "this.setCustomValidity('Please enter your password')", 'oninput': "this.setCustomValidity('')"}))
+                                                  widget=forms.TextInput(attrs={'type': 'password', 'class': 'form-control', 'autocomplete': 'off', 'oninvalid': "this.setCustomValidity('Please enter your password')", 'oninput': "this.setCustomValidity('')"}))
 
     def clean(self):
         if self.is_valid():

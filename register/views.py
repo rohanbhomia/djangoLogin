@@ -32,7 +32,7 @@ def register(request):
                 password=password,
                 username=username,
                 mobile=mobile,
-                gender=gender)
+            )
 
             messages.success(request, "Sign up successfully")
             return redirect('login')
