@@ -45,12 +45,14 @@ def login_page(request):
             messages.success(request, "Logged In")
             return redirect("home")
         else:
+            print("Please correct below errors", form.errors)
             messages.error(request, "Please correct below errors")
+            return render(request, "login/login_v2.html", {'form': form})
     else:
         form = AccountAuthenticationForm()
 
     context['login_form'] = form
-    return render(request, "login/login.html", context)
+    return render(request, "login/login_v2.html", context)
 
 
 def logout(request):

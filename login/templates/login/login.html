@@ -40,6 +40,12 @@
     }
 </style>
 
+<head>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+
+</head>
+
 <body>
     <div class="containermain">
         <div class="container" style="padding-top:150px;">
@@ -86,5 +92,8 @@
         console.log("ready!");
         $('<div class="forgotpassword"><a href="/password_reset" class="forgotpassword">Forgot password?</a><div>').insertAfter("#id_password");
         $('<br>').insertAfter("#div_id_email");
+        $('<i class="bi bi-eye-slash" id="togglePassword"></i>').insertAfter("#id_password");
+
+
     });
 </script>
