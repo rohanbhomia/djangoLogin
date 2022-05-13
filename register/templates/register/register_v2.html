@@ -83,21 +83,23 @@
 
                         <label for="email_label">Email</label>
                         <i class="fa fa-envelope" style="margin-left: 5px;"></i>
-                        <input type="email" style="width: 100%;" name="email" />
+                        <input type="email" style="width: 320px;" name="email" onkeyup="email_check(this.value)"
+                            id="email" autocomplete="off" value="{{email}}" required />
+                        <i class="fa fa-check" style="margin-left: -30px;;display: none;" id="check_id2"></i>
 
                     </p>
                     <p>
                         <label for="password_label">Password</label>
                         <i class="fa fa-key" style="margin-left: 5px;"></i>
 
-                        <input type="password" style="width: 100%;" id="password" name="password" />
+                        <input type="password" style="width: 320px;" id="password" name="password1" required />
                         <i class="bi bi-eye-slash" id="togglePassword" style="margin-left: -30px;"></i>
                     </p>
                     <p>
                         <label for="password2_label">Confirm password</label>
                         <i class="fa fa-key" style="margin-left: 5px;"></i>
 
-                        <input type="password" style="width: 100%;" id="password2" name="password2" />
+                        <input type="password" style="width: 320px;" id="password2" name="password2" required />
                         <i class="bi bi-eye-slash" id="togglePassword2" style="margin-left: -30px;"></i>
                     </p>
                     {% if form.errors %}
@@ -118,8 +120,8 @@
 
                     {% endfor %}
                     {% endif %}
-                    <input type="submit" class="btn btn-success submitbutton rounded-lg" style="border-color: black;"
-                        value="Create account">
+                    <input type="submit" class="btn btn-success submitbutton rounded-lg"
+                        style="border-color: black;width: 320px;" value="Create account">
                 </form>
 
             </div>
@@ -130,7 +132,7 @@
                         value="Create an account" />
 
                 </form> -->
-                <p>New user? <a href="/register">Create an account</a></p>
+                <p>Already have a account? <a href="{% url 'login' %}">Log in</a></p>
 
             </div>
 
@@ -202,8 +204,12 @@
                         $('#check_id').addClass("fa fa-close")
                         $('#check_id').css("color", "red")
                         // $('#check_id').hide();
-
+                        $('#usercheck').hide();
                         $('<p id="usercheck" style="color:red;">Username already exists</p>').insertAfter("#check_id");
+                        const form = document.querySelector("form");
+                        form.addEventListener('submit', function (e) {
+                            e.preventDefault();
+                        });
                     }
                     else {
                         $('#check_id').show();
@@ -212,6 +218,10 @@
                         $('#check_id').css("color", "#00FF00")
 
                         $('#usercheck').hide();
+
+                        const form = document.querySelector("form");
+                        form.addEventListener('submit', function (e) { $(this).trigger('submit'); });
+
 
                     }
 
@@ -222,6 +232,61 @@
         else {
             $('#check_id').hide();
             $('#usercheck').hide();
+        }
+    }
+
+    function validateEmail(email) {
+        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        return emailReg.test(email);
+    }
+    function email_check(value) {
+        var email_length = value.length
+
+        if (validateEmail(value)) {
+
+            console.log('email check', email_length)
+            $.ajax({
+                url: "{% url 'email_check' %}",
+                type: "POST",
+                data: { "email": value, "csrfmiddlewaretoken": "{{csrf_token}}" },
+                success: function (response) {
+                    console.log(response);
+                    if (response === 'True') {
+
+                        console.log('True');
+                        $('#check_id2').show();
+                        $('#check_id2').removeClass("fa fa-check")
+                        $('#check_id2').addClass("fa fa-close")
+                        $('#check_id2').css("color", "red")
+                        // $('#check_id2').hide();
+                        $('#usercheck2').hide();
+                        $('<p id="usercheck2" style="color:red;">Email already in use</p>').insertAfter("#check_id2");
+                        const form = document.querySelector("form");
+                        form.addEventListener('submit', function (e) {
+                            e.preventDefault();
+                        });
+                    }
+                    else {
+                        $('#check_id2').show();
+                        $('#check_id2').removeClass("fa fa-close")
+                        $('#check_id2').addClass("fa fa-check")
+                        $('#check_id2').css("color", "#00FF00")
+
+                        $('#usercheck2').hide();
+
+                        const form = document.querySelector("form");
+                        form.addEventListener('submit', function (e) { $(this).trigger('submit'); });
+
+
+                    }
+
+                }
+            });
+
+        }
+        else {
+            $('#check_id2').hide();
+            $('#usercheck2').hide();
         }
     }
 </script>

@@ -28,7 +28,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'mobile',
+        fields = ('username',
                   'email', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):

@@ -36,8 +36,13 @@ def register(request):
             return redirect('login')
         else:
             print("not valid...", form.errors)
-            username = request.POST.get('username')
-            return render(request, "register/register_v2.html", {'form': form, 'not_valid': True, 'username': username})
+            print("not validaaa...", form.cleaned_data['username'])
+            username = form.cleaned_data['username']
+            if form.cleaned_data.get('email') is not None:
+                email = form.cleaned_data['email']
+            else:
+                email = ''
+            return render(request, "register/register_v2.html", {'form': form, 'not_valid': True, 'username': username, 'email': email})
 
     return render(request, "register/register_v2.html", {'form': form})
 
@@ -45,6 +50,15 @@ def register(request):
 def username_check(request):
     username = request.POST.get('username')
     customuser_obj = CustomUser.objects.filter(username=username)
+    if customuser_obj:
+        return HttpResponse('True')
+    else:
+        return HttpResponse('False')
+
+
+def email_check(request):
+    email = request.POST.get('email')
+    customuser_obj = CustomUser.objects.filter(email=email)
     if customuser_obj:
         return HttpResponse('True')
     else:
