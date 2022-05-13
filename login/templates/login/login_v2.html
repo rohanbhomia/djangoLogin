@@ -73,7 +73,8 @@
 
                         <label for="email_label">Email</label>
                         <i class="fa fa-envelope" style="margin-left: 5px;"></i>
-                        <input type="email" style="width: 100%;" name="email" />
+                        <input type="email" style="width: 100%;" name="email" required
+                            oninvalid="this.setCustomValidity('Enter email')" oninput="this.setCustomValidity('')" />
 
                     </p>
                     <p>
@@ -81,7 +82,8 @@
                         <i class="fa fa-key" style="margin-left: 5px;"></i>
                         <a href="/password_reset" class="forgotpassword" style="margin-left: 100px;">Forgot
                             password?</a>
-                        <input type="password" style="width: 100%;" id="password" name="password" />
+                        <input type="password" style="width: 100%;" id="password" name="password" required
+                            oninvalid="this.setCustomValidity('Enter password')" oninput="this.setCustomValidity('')" />
                         <i class="bi bi-eye-slash" id="togglePassword" style="margin-left: -30px;"></i>
                     </p>
                     {% if form.errors %}
@@ -90,9 +92,10 @@
 
                     {% for error in field.errors %}
 
-                    <div class="alert alert-danger">
+                    <!-- <div class="alert alert-danger">
                         <strong>{{ error|escape }}</strong>
-                    </div>
+                    </div> -->
+                    <p style="color: red;" class="messages">{{error}}</p>
                     {% endfor %}
 
 
