@@ -4,6 +4,7 @@ from users.models import CustomUser
 from django.contrib.auth import login
 from login.views import home, login_page, login
 from django.contrib import messages
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -24,21 +25,27 @@ def register(request):
             email = request.POST.get('email')
             password = request.POST.get('password1')
             username = request.POST.get('username')
-            mobile = request.POST.get('mobile')
-            gender = request.POST.get('gender')
 
             user = CustomUser.objects.create_user(
                 email=email,
                 password=password,
                 username=username,
-                mobile=mobile,
             )
 
             messages.success(request, "Sign up successfully")
             return redirect('login')
         else:
             print("not valid...", form.errors)
+            username = request.POST.get('username')
+            return render(request, "register/register_v2.html", {'form': form, 'not_valid': True, 'username': username})
 
-            return render(request, "register/register.html", {'form': form, 'not_valid': True})
+    return render(request, "register/register_v2.html", {'form': form})
 
-    return render(request, "register/register.html", {'form': form})
+
+def username_check(request):
+    username = request.POST.get('username')
+    customuser_obj = CustomUser.objects.filter(username=username)
+    if customuser_obj:
+        return HttpResponse('True')
+    else:
+        return HttpResponse('False')

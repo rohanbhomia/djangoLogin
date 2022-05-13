@@ -36,8 +36,8 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['username'] = forms.CharField(label='Username', validators=[username_check], error_messages={'required': "Please enter your username"},
                                                   widget=forms.TextInput(attrs={'type': 'text', 'class': 'form-control', 'oninvalid': "this.setCustomValidity('Please enter your username')", 'oninput': "this.setCustomValidity('')"}))
 
-        self.fields['mobile'] = forms.IntegerField(label='Mobile', validators=[mobile_check], error_messages={'required': "Please enter your mobile"},
-                                                   widget=forms.TextInput(attrs={'type': 'number', 'class': 'form-control', 'oninvalid': "this.setCustomValidity('Please enter your mobile')", 'oninput': "this.setCustomValidity('')"}))
+        # self.fields['mobile'] = forms.IntegerField(label='Mobile', validators=[mobile_check], error_messages={'required': "Please enter your mobile"},
+        #                                            widget=forms.TextInput(attrs={'type': 'number', 'class': 'form-control', 'oninvalid': "this.setCustomValidity('Please enter your mobile')", 'oninput': "this.setCustomValidity('')"}))
 
         self.fields['email'] = forms.CharField(label='Email', error_messages={'required': "Please enter your email"},
                                                widget=forms.TextInput(attrs={'type': 'email', 'class': 'form-control', 'oninvalid': "this.setCustomValidity('Please enter your email')", 'oninput': "this.setCustomValidity('')"}))
