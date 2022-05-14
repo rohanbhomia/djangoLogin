@@ -1,6 +1,6 @@
 
 from django.http import HttpResponse
-from .forms import AccountAuthenticationForm, ChangePassword
+from .forms import AccountAuthenticationForm, ChangePassword, CustomPasswordResetForm
 from django.contrib.auth import login, logout as django_logout, authenticate
 from django.contrib import messages
 from django.shortcuts import (
@@ -117,7 +117,7 @@ def save_password(request):
 
 def password_reset_request(request):
     if request.method == "POST":
-        password_reset_form = PasswordResetForm(request.POST)
+        password_reset_form = CustomPasswordResetForm(request.POST)
         if password_reset_form.is_valid():
             data = password_reset_form.cleaned_data['email']
             associated_users = CustomUser.objects.filter(Q(email=data))
@@ -141,7 +141,11 @@ def password_reset_request(request):
                     except BadHeaderError:
                         return HttpResponse('Invalid header found.')
                     return redirect("/password_reset/done/")
+            else:
+                print('form...', password_reset_form.errors)
+                return render(request=request, template_name="login/password_reset.html", context={"form": password_reset_form})
         else:
-            return render(request=request, template_name="login/password_reset.html", context={"password_reset_form": password_reset_form})
-    password_reset_form = PasswordResetForm()
+            print('form...', password_reset_form.errors)
+            return render(request=request, template_name="login/password_reset.html", context={"form": password_reset_form})
+    password_reset_form = CustomPasswordResetForm()
     return render(request=request, template_name="login/password_reset.html", context={"password_reset_form": password_reset_form})

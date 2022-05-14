@@ -2,6 +2,7 @@ from django import forms
 from users.models import CustomUser
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.forms import PasswordResetForm
 
 
 class AccountAuthenticationForm(forms.ModelForm):
@@ -31,6 +32,7 @@ class AccountAuthenticationForm(forms.ModelForm):
                                                   widget=forms.TextInput(attrs={'type': 'password', 'class': 'form-control', 'autocomplete': 'off', 'oninvalid': "this.setCustomValidity('Please enter your password')", 'oninput': "this.setCustomValidity('')", 'id': 'password'}))
 
     def clean(self):
+
         if self.is_valid():
 
             email = self.cleaned_data.get('email')
@@ -63,3 +65,20 @@ class ChangePassword(forms.Form):
             if password != password2:
                 raise forms.ValidationError(
                     'Both new password and confirm password should be same')
+
+
+class CustomPasswordResetForm(PasswordResetForm):
+
+    def __init__(self, *args, **kwargs):
+
+        super(CustomPasswordResetForm, self).__init__(*args, **kwargs)
+        self.fields['email'] = forms.CharField(label='Email', error_messages={'required': "Please enter your email"},
+                                               widget=forms.TextInput(attrs={'type': 'email', 'class': 'form-control', 'autocomplete': 'off', 'oninvalid': "this.setCustomValidity('Please enter your email')", 'oninput': "this.setCustomValidity('')", 'id': 'email'}))
+
+    def clean(self):
+        if self.is_valid():
+
+            email = self.cleaned_data.get('email')
+
+            if CustomUser.objects.filter(email=email).exists() is False:
+                raise forms.ValidationError('Email does not exists')

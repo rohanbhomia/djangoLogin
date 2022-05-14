@@ -1,0 +1,36 @@
+.container {
+    width: 350px;
+}
+
+
+.containerinner {
+    width: 800px;
+    padding-top: 150px;
+    padding-left: 600px;
+}
+
+.errorlist li {
+    color: red;
+}
+
+.submitbutton {
+    width: 100%;
+}
+
+.forgotpassword {
+    text-align: right;
+    text-decoration: none;
+}
+
+.asteriskField {
+    display: none;
+}
+
+body {
+    /* background-image: url(static/img/bg10.webp); */
+    background-color: aqua;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    /* optional, center the image */
+}

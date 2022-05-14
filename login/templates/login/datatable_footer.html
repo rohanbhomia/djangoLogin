@@ -1,18 +1,5 @@
 {% load static %}
-<!-- <link href="{% static 'extra/css/jquery-ui.css' %}" rel="stylesheet" type="text/css"> -->
 
-<!-- <script src="{% static 'extra/js/jquery-ui.min.js' %}"></script>  -->
-<!-- <script src="{% static 'extra/js/dataTables.colVis.js' %}"></script> 
-<script src="{% static 'extra/js/datatable/dataTables.select.min.js' %}"></script> 
-<script src="{% static 'extra/js/datatable/dataTables.buttons.min.js' %}"></script> 
-<script src="{% static 'extra/js/datatable/buttons.flash.min.js' %}"></script> 
-<script src="{% static 'extra/js/datatable/jszip.min.js' %}"></script> 
-<script src="{% static 'extra/js/datatable/pdfmake.min.js' %}"></script> 
-<script src="{% static 'extra/js/datatable/vfs_fonts.js' %}"></script> 
-<script src="{% static 'extra/js/datatable/buttons.html5.min.js' %}"></script> 
-<script src="{% static 'extra/js/datatable/buttons.print.min.js' %}"></script> 
-<script src="{% static 'extra/js/multiselect/bootstrap-multiselect.js' %}"></script> 
-<script src="{% static 'extra/js/bootstrap-notify.min.js' %}"></script>  -->
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
 <script type="text/javascript">
@@ -29,10 +16,10 @@
         //datatables         
         table = $('#table').DataTable({
             "responsive": true,
-            "oLanguage": {
-                "sProcessing": "<img src='{% static 'loader/loading.gif' %}'  />"
+            // "oLanguage": {
+            //     "sProcessing": "<img src='{% static 'loader/loading.gif' %}'  />"
 
-            },
+            // },
             "pagingType": "full_numbers",
 
             "processing": true, //Feature control the processing indicator.

@@ -1,5 +1,6 @@
 import email
 from django.shortcuts import render, redirect
+from urllib3 import HTTPResponse
 from todos.forms import CreateTodo
 from todos.models import Todos
 from users.models import CustomUser
@@ -15,8 +16,10 @@ def create_todo(request):
     if request.method == "POST":
         form = CreateTodo(
             request.POST)
-        title = request.POST.get('title')
-        description = request.POST.get('description')
+        title = request.POST.get('create_title')
+        description = request.POST.get('create_description')
+        print('title...', title)
+        print('description...', description)
         print('CustomUser...', user.email)
         custom_user = CustomUser.objects.get(email=user.email)
         print('CustomUser...', custom_user)
@@ -26,8 +29,11 @@ def create_todo(request):
             user_id=custom_user
         )
         todos.save()
-        messages.success(request, 'Created successfully')
-        return redirect('create_todo')
+        return render(request, "todos/todo_datatable.html", {'form': form})
+        return redirect('todo_list')
+        return HTTPResponse('1')
+        #messages.success(request, 'Created successfully')
+        # return redirect('create_todo')
 
     return render(request, "todos/create_todo.html", {'form': form})
 
@@ -38,7 +44,7 @@ def delete_todo(request):
     todo_obj = Todos.objects.filter(id=row_id).delete()
     print('row_id...', row_id)
     messages.success(request, 'Deleted successfully')
-    return redirect('todo_list')
+    return redirect('create_todo')
 
 
 def edit_todo(request):
@@ -54,7 +60,7 @@ def edit_todo(request):
 
     print('row_id...', row_id)
     messages.success(request, 'Updated successfully')
-    return redirect('todo_list')
+    return redirect('create_todo')
 
 
 def todo_list(request):
